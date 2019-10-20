@@ -1,0 +1,78 @@
+-data = data || {}
+doctype html
+html(lang='en')
+  head
+    title Usuarios
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+  body
+    .container
+      h2 Registro de Usuarios
+      form(action="." method="POST")
+        .form-group
+          label(for='nombre') Nombre:
+          input#nombre.form-control(type='text', placeholder='Ingrese su nombre', name='nombre', autofocus='')
+        .form-group
+          label(for='apellidos') Apellidos:
+          input#apellido.form-control(type='text', placeholder='Ingrese sus apellidos', name='apellidos')
+        .form-group
+          label(for='email') Email:
+          input#email.form-control(type='email', placeholder='Ingrese su email', name='email')
+        .form-group
+          label(for='celular') Celular:
+          input#celular.form-control(type='number', placeholder='Ingrese su celular', name='celular')
+        .form-group
+          label(for='usuario') Usuario:
+          input#usuario.form-control(type='text', placeholder='Ingrese su usuario', name='usuario')
+        .form-group
+          label(for='password') Password:
+          input#password.form-control(type='password', placeholder='Ingrese su password', name='password')
+        button.btn.btn-success(type='submit') Registrar
+
+    .container
+      h2 Lista de Usuarios
+      table.table
+          thead
+            tr
+              th Nombre
+              th Apellidos
+              th Email
+              th Celular
+              th Usuario
+              th Password
+              th Opciones
+          tbody
+            each user in lstUsers
+              tr
+                td= user.nombre
+                td= user.apellidos
+                td= user.email
+                td= user.celular
+                td= user.usuario
+                td= user.password
+                td
+                  button.btn.btn-danger(type='button' onclick="deleteUser('"+user.id+"')" data-toggle='tooltip' data-placement='top' title='Eliminar')
+                    span.glyphicon.glyphicon-trash(aria-hidden='true')
+                  button.btn.btn-info(type='button'  data-toggle='tooltip' data-placement='top' title='Editar')
+                    span.glyphicon.glyphicon-pencil(aria-hidden='true')
+
+
+footer
+  .container
+    div(align='center')
+      | Desarrollado por 
+      a(href='http://www.dinambit.com' target='_blank') dinambit
+
+script.
+  function deleteUser(iduser) {
+    $.ajax({
+          method: "DELETE",
+          url: "/user/"+iduser,
+          success: function(result) {
+                  location.reload();
+          }
+        })
+  }
