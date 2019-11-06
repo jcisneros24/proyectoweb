@@ -56,9 +56,38 @@ html(lang='en')
                 td
                   button.btn.btn-danger(type='button' onclick="deleteUser('"+user.id+"')" data-toggle='tooltip' data-placement='top' title='Eliminar')
                     span.glyphicon.glyphicon-trash(aria-hidden='true')
-                  button.btn.btn-info(type='button' onclick="showModal()" data-toggle='tooltip' data-placement='top' title='Editar')
+                  button.btn.btn-info(type='button' onclick="showModal('"+user.id+"')" data-toggle='tooltip' data-placement='top' title='Editar')
                     span.glyphicon.glyphicon-pencil(aria-hidden='true')
 
+#myModal.modal.fade(role='dialog')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button' data-dismiss='modal') &times;
+        h4.modal-title Editar Usuario
+      .modal-body
+        form(action="." method="POST")
+        .form-group
+          label(for='nombre') Nombre:
+          input#nombre.form-control(type='text', placeholder='Ingrese su nombre', name='nombre', autofocus='')
+        .form-group
+          label(for='apellidos') Apellidos:
+          input#apellido.form-control(type='text', placeholder='Ingrese sus apellidos', name='apellidos')
+        .form-group
+          label(for='email') Email:
+          input#email.form-control(type='email', placeholder='Ingrese su email', name='email')
+        .form-group
+          label(for='celular') Celular:
+          input#celular.form-control(type='number', placeholder='Ingrese su celular', name='celular')
+        .form-group
+          label(for='usuario') Usuario:
+          input#usuario.form-control(type='text', placeholder='Ingrese su usuario', name='usuario')
+        .form-group
+          label(for='password') Password:
+          input#password.form-control(type='password', placeholder='Ingrese su password', name='password')
+        button.btn.btn-success(type='submit') Registrar
+      .modal-footer
+        button.btn.btn-default(type='button' data-dismiss='modal') Close
 
 footer
   .container
@@ -73,6 +102,16 @@ script.
           url: "/user/"+iduser,
           success: function(result) {
                   location.reload();
+          }
+        })
+  }
+
+    function showModal(iduser) {
+    $.ajax({
+          method: "GET",
+          url: "/user/"+iduser,
+          success: function(result) {
+                  $('#myModal').modal('show');
           }
         })
   }

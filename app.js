@@ -7,6 +7,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var indexRouter = require('./routes/IndexRoutes');
 var usersRouter = require('./routes/UserRoutes');
+var modalUtil = require('./src/util/ModalUtil');
 var app = express();
 
 // connection database
@@ -48,6 +49,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.use(function(req, res, next){
+  modalUtil.showModal();
 });
 
 module.exports = app;
